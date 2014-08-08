@@ -10,7 +10,7 @@
 /**
  * Implements hook_install().
  */
-function smart_fpage_install() {
+function search_limit_install() {
 
   variable_set('search_limit_items', '10');
 
@@ -19,7 +19,7 @@ function smart_fpage_install() {
 /**
  * Implements hook_uninstall().
  */
-function smart_fpage_uninstall() {
+function search_limit_uninstall() {
 
   variable_del('search_limit_items');
 
