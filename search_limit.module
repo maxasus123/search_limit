@@ -1,0 +1,31 @@
+<?php
+
+/*
+ * Implements hook_menu().
+ */ 
+function search_limit_menu() {
+
+  $items['admin/config/search/limit-items'] = array(
+      'title' => 'Search limit items',
+      'description' => 'Search limit items settings.',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('_search_limit_config_form'),
+      'access arguments' => array('administer site configuration'),
+      'file' => 'search_limit.admin.inc',
+    );
+    return $items;
+}
+
+/**
+ * @file
+ * Main functionality for the Search Configuration module.
+ */
+
+function search_limit_query_alter(QueryAlterableInterface $query) {
+ $limit_items = variable_get('search_limit_items', '');
+  if (is_a($query, 'PagerDefault')){
+    $tables = $query->getTables();
+    if ((!empty($tables['i'])) && ($tables['i']['table'] == 'search_index'))
+      $query->limit($limit_items);
+  }
+}
